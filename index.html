@@ -75,7 +75,8 @@ function MyMouseMoveHandler (MyEvent) {
 }
 
 function MyMouseDownHandeler (){
-	var p = new Particle(MousePos, 10)
+	console.log(Particles.length);
+	var p = new Particle(MousePos, 10);
 	ParticleList.push(p);
 	MouseDown = true;
 }
