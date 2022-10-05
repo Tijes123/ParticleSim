@@ -1,5 +1,5 @@
 
-function Vector2 (a,b){
+export function Vector2 (a,b){
 	this.x = a;
 	this.y = b;
 	
@@ -15,7 +15,7 @@ function Vector2 (a,b){
 
 }
 
-function VectorMath (){
+export function VectorMath (){
 	
 	this.Scale = function (a,b){
 		return new Vector2 (a.x * b, a.y * b);
