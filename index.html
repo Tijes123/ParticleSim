@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Physics</title>
+  </head>
+  <body>
+	
+        <canvas id= "myCanvas" width= 1300 height=700 style="background-color: white;"> </canvas>
+	
+	<script type="module">
+    import {Vector2, VectorMath} from './Utils/VectorMath.js';
+        
+ myCanvas.width = window.innerWidth - 20;                       // fill the entire browser width
+ myCanvas.height = window.innerHeight - 20;                     // fill re browser heightthe enti
+        
+		const canvas = document.getElementById("myCanvas");
+		const ctx = Canvas.getContext("2d");
+		const FPS = 30;
+		const G = 9.81;
+		const dt = 1;
+		
+		var MousePos = new Vector2(0,0);
+		var MouseDown = false;
+		var ParticleList = [];
+
+function Particle (a,r){
+	this.position = new Vector2(a.x,a.y);
+	this.radius = r;
+	this.acceleration = new Vector2(0,0);
+	this.prevPos = new Vector2(a,b);
+}
+
+function Do_a_Frame(){
+	ctx.clearrect(0, 0, canvas.width, canvas.height);
+	
+	for(var i = 0; i < ParticleList.length; i++){
+		P = ParticleList[i]
+		p.PhysicsUpdate()
+		DrawCircle(P.position,P.radius, "black", false);
+	}
+}
+
+
+Particle.prototype.PhysicsUpdate = function (){
+	
+	var Temp = new Vector2(this.position.x,this.position.y);
+	force = new Vector2(0, G * dt);
+	
+	
+	this.acceleration = VectorMath.Add(this.acceleration, force);
+	
+	this.position.x = this.position.x + (this.prevPos.x - this.position.x) + this.acceleration.x;
+	this.position.y = this.position.y + (this.prevPos.y - this.position.y) + this.acceleration.y;
+	
+	this.prevPos.x = Temp.x;
+	this.prevPos.y = Temp.y;
+}
+
+function DrawCircle (pos, radius, style, stroke) {
+  ctx.beginPath();
+  ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+  ctx.fillStyle = style
+  ctx.strokeStyle = style
+  if (stroke) ctx.stroke();
+  else ctx.fill();
+}
+
+function MyMouseMoveHandler (MyEvent) { 
+   var rect = myCanvas.getBoundingClientRect();
+   MousePos.x = MyEvent.clientX - rect.left;
+   MousePos.y = MyEvent.clientY - rect.top;
+   MyEvent.preventDefault();
+}
+
+function MyMouseDownHandeler (){
+	var p = new Particle(MousePos, 10)
+	ParticleList.push(p);
+	MouseDown = true;
+}
+
+function MyMouseUpHandeler (){
+	MouseDown = false;
+}
+
+setInterval("Do_a_Frame", 1000/FPS);
+
+canvas.addEventListener("mousemove",MyMouseMoveHandeler);
+canvas.addEventListener("onmousedown",MyMouseDownHandeler);
+canvas.addEventListener("onmouseup",MyMouseDownHandeler);
+</script>
+  </body>
+</html>
