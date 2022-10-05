@@ -1,2 +1,2 @@
 # ParticleSim
- just trying uot github
+ just trying out github
